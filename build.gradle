@@ -45,7 +45,7 @@ dependencies {
     annotationProcessor('org.projectlombok:lombok')
     // test
     testCompile('org.springframework.boot:spring-boot-starter-test')
-    testCompile('org.projectlombok:lombok')
-    testAnnotationProcessor('org.projectlombok:lombok')
+//    testCompile('org.projectlombok:lombok')
+//    testAnnotationProcessor('org.projectlombok:lombok')
 }
 
