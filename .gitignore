@@ -1,5 +1,6 @@
-# Spring boot Oauth setting
+# Spring boot Oauth/Production setting
 application-oauth.properties
+application-real-db.properties
 
 # Project exclude paths
 /.gradle/
