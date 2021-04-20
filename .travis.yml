@@ -6,8 +6,7 @@ branches:
   only:
     - main
 
-# CI: Travis home
-# BUILD
+# BUILD: Github to TravisCI
 cache:
   directories:
     - '$HOME/.m2/repository'
@@ -21,19 +20,34 @@ before_deploy:
   - mkdir -p deploy
   - mv spring-boot-practice.zip deploy/
 
-# DEPLOY
-# travis with s3 envs
+# DEPLOY: TravisCI to AWS
 deploy:
-  provider: s3
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key: $AWS_SECRET_KEY
-  bucket: build-spring-boot-practice
-  region: ap-northeast-2
-  acl: private
-  local_dir: deploy
-  skip_cleanup: true
-  on:
-    all_branches: true
+  # TravisCI to S3
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: build-spring-boot-practice
+    region: ap-northeast-2
+    acl: private
+    local_dir: deploy
+    skip_cleanup: true
+    wait-until-deployed: true
+    on:
+      all_branches: true
+
+  # S3 to EC2
+  - provider: codedeploy
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: build-spring-boot-practice
+    key: spring-boot-practice.zip # Build file
+    bundle_type: zip
+    application: codedeploy-spring-boot-practice # Codedeploy app
+    deployment_group: codedeploy-spring-boot-practice-group # Codedeploy group
+    region: ap-northeast-2
+    wait_until_deployed: true
+    on:
+      all_branches: true
 
 # NOTIFICATION
 notifications:
