@@ -17,29 +17,23 @@ script: "./gradlew clean build"
 
 # PRE-DEPLOY
 before_deploy:
-  - zip -r spring-boot-practice *
+  - zip -r spring-boot-practice.zip *
   - mkdir -p deploy
-  - mv spring-boot-practice deploy/spring-boot-practice.zip
+  - mv spring-boot-practice.zip deploy/
 
 # DEPLOY
-# travis envs
+# travis with s3 envs
 deploy:
   provider: s3
   access_key_id: $AWS_ACCESS_KEY
   secret_access_key: $AWS_SECRET_KEY
   bucket: build-spring-boot-practice
   region: ap-northeast-2
-<<<<<<< HEAD
   acl: private
   local_dir: deploy
   skip_cleanup: true
   on:
     all_branches: true
-=======
-  cleanup: true
-  acl: private
-  local_dir: deploy
->>>>>>> acea657 (feat: Fix build script - CD)
 
 # NOTIFICATION
 notifications:
