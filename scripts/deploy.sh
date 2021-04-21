@@ -7,7 +7,7 @@ echo "> Copy build files"
 cp $REPOSITORY/zip/*.jar $REPOSITORY
 
 echo "> Check application running state with pid"
-CURRENT_PID=$(pgrep -fl ${PROJECT_NAME} | grep jar | awk '{print $1}')
+CURRENT_PID=$(ps -ef | grep ${PROJECT_NAME} | grep jar | awk '{print $2}')
 
 echo "> Now running application pid: $CURRENT_PID"
 if [ -z "$CURRENT_PID" ]; then
