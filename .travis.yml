@@ -34,7 +34,6 @@ deploy:
     wait-until-deployed: true
     on:
       all_branches: true
-
   # S3 to EC2
   - provider: codedeploy
     access_key_id: $AWS_ACCESS_KEY
