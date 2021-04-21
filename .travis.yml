@@ -16,9 +16,13 @@ script: "./gradlew clean build"
 
 # PRE-DEPLOY
 before_deploy:
-  - zip -r spring-boot-practice.zip *
-  - mkdir -p deploy
-  - mv spring-boot-practice.zip deploy/
+  - mkdir -p before-deploy
+  - cp scripts/*.sh before-deploy/
+  - cp appspec.yml before-deploy/
+  - cp build/libs/*.jar before-deploy/
+  - cd before-deploy && zip -r spring-boot-practice.zip *
+  - cd ../ && mkdir -p deploy
+  - mv before-deploy/spring-boot-practice.zip deploy/
 
 # DEPLOY: TravisCI to AWS
 deploy:

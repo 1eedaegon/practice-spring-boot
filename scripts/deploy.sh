@@ -1,24 +1,13 @@
 #!/bin/bash
 
-REPOSITORY=/home/ec2-user/app/step1
+REPOSITORY=/home/ec2-user/app/step2
 PROJECT_NAME=practice-spring-boot
 
-cd $REPOSITORY/$PROJECT_NAME
-
-echo "> Git pull"
-git pull
-
-echo "> Project build start"
-./gradlew build
-
-echo "> Change directory to ./step1"
-cd $REPOSITORY
-
-echo "> Replicate build resources"
-cp $REPOSITORY/$PROJECT_NAME/build/libs/*.jar $REPOSITORY/
+echo "> Copy build files"
+cp $REPOSITORY/zip/*.jar $REPOSITORY
 
 echo "> Check application running state with pid"
-CURRENT_PID=$(pgrep -f ${PROJECT_NAME}.*.jar)
+CURRENT_PID=$(pgrep -fl ${PROJECT_NAME} | grep jar | awk '{print $1}')
 
 echo "> Now running application pid: $CURRENT_PID"
 if [ -z "$CURRENT_PID" ]; then
@@ -30,10 +19,13 @@ else
 fi
 
 echo "> Deploy new application"
-JAR_NAME=$(ls -tr $REPOSITORY/ | grep jar | tail -n 1)
+JAR_NAME=$(ls -tr $REPOSITORY/*.jar | tail -n 1)
 
 echo "> Jar name: $JAR_NAME"
+echo "> Grant execution permission(+x) to $JAR_NAME"
+chmod +x $JAR_NAME
+
 nohup java -jar \
 	-Dspring.config.location=classpath:/application.properties,/home/ec2-user/app/application-oauth.properties,/home/ec2-user/app/application-real-db.properties,classpath:/application-real.properties \
 	-Dspring.profiles.active=real \
-	$REPOSITORY/$JAR_NAME 2>&1 &
+	$JAR_NAME > $REPOSITORY/nohup.out 2>&1 &
