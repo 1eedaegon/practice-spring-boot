@@ -25,6 +25,7 @@ echo "> Jar name: $JAR_NAME"
 echo "> Grant execution permission(+x) to $JAR_NAME"
 chmod +x $JAR_NAME
 
+echo "> Start Application now!"
 nohup java -jar \
 	-Dspring.config.location=classpath:/application.properties,/home/ec2-user/app/application-oauth.properties,/home/ec2-user/app/application-real-db.properties,classpath:/application-real.properties \
 	-Dspring.profiles.active=real \
