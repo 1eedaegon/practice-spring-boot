@@ -7,7 +7,7 @@ function find_idle_profile() {
     then
       CURRENT_PROFILE=real2
     else
-      CURRENT_PROFILE=$(curl http://localhost/profile)
+      CURRENT_PROFILE=$(curl -s http://localhost/profile)
     fi
 
     if [ ${CURRENT_PROFILE} == real1 ]
@@ -16,6 +16,8 @@ function find_idle_profile() {
     else
       IDLE_PROFILE=real1
     fi
+    echo "CURRENT_PROFILE is : ${CURRENT_PROFILE}"
+    echo "IDLE_PROFILE is: ${IDLE_PROFILE}"
     echo "${IDLE_PROFILE}"
 }
 
