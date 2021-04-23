@@ -17,7 +17,7 @@ hooks:
       runas: ec2-user
   # Start springboot server when deployed by Codedeploy from S3
   ApplicationStart:
-    - location: deploy.sh
+    - location: start.sh
       timeout: 60
       runas: ec2-user
   # Health check after start spirngboot server

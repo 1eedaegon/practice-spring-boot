@@ -16,8 +16,6 @@ function find_idle_profile() {
     else
       IDLE_PROFILE=real1
     fi
-    echo "CURRENT_PROFILE is : ${CURRENT_PROFILE}"
-    echo "IDLE_PROFILE is: ${IDLE_PROFILE}"
     echo "${IDLE_PROFILE}"
 }
 
