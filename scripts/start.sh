@@ -5,6 +5,7 @@ ABSDIR=$(dirname $ABSPATH)
 
 REPOSITORY=/home/ec2-user/app/step3
 PROJECT_NAME=practice-spring-boot
+source ${ABSDIR}/profile.sh
 
 echo "> Copy build files"
 echo "> cp $REPOSITORY/zip/*.jar $REPOSITORY/"
