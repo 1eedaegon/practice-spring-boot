@@ -12,13 +12,13 @@ echo "> IDLE_PORT :$IDLE_PORT"
 echo "> curl -s http://localhost:$IDLE_PORT/profile"
 sleep 10
 
-for RETRY_COUNT in {1..10}
-do
+for RETRY_COUNT in {1..10}; do
   RESPONSE=$(curl -s http://localhost:${IDLE_PORT}/profile)
   UP_COUNT=$(echo ${RESPONSE} | grep 'real' | wc -l)
+  echo "RESPONSE: ${RESPONSE}"
+  echo "UP_COUNT: ${UP_COUNT}"
 
-  if [ ${UP_COUNT} -ge 1 ]
-  then
+  if [ ${UP_COUNT} -ge 1 ]; then
     echo "> Success Health check"
     switch_proxy
     break
@@ -27,8 +27,7 @@ do
     echo "> Health check: ${RESPONSE}"
   fi
 
-  if [ ${RETRY_COUNT} -eq 10 ]
-  then
+  if [ ${RETRY_COUNT} -eq 10 ]; then
     echo "> Failed Health check"
     echo "> Stop deploy without Nginx connection"
     exit 1
